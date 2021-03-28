@@ -1,0 +1,51 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@namespace Admin_Web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<link rel="stylesheet" href="~/css/index.css" />
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div style="text-align: center; margin:5px;">
+    <a asp-page="/Book" asp-page-handler="create" class="btn btn-primary">Add a new book</a>
+</div>
+    
+<div class="align-table">
+    
+    <table class="table-1">
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Tác giả</th>
+            <th>Nhà xuất bản</th>
+            <th>Năm xuất bản</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.Books)
+        {
+
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Authors</td>
+                <td>@item.Publisher</td>
+                <td>@item.Year</td>
+                <td>
+                    <a class="btn bg-btn" href= "/Book/@item.Id">Detail</a>
+                    <a asp-page="/Book" asp-route-id="@item.Id" asp-page-handler="delete"  class="btn btn-danger" >Delete</a>
+                    
+                </td>
+
+            </tr>
+        }
+
+
+        <tr>
+            <td colspan="5" class="text-merge">Tổng số sách trong thư viện: @Model.Books.Count</td>
+
+        </tr>
+    </table>
+</div>

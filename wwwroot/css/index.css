@@ -1,0 +1,33 @@
+.table-1{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+}
+td, tr, th{
+    border: 3px solid #bbb;
+    text-align: left;
+    padding: 3px;
+}
+
+tr:nth-child(odd) { 
+    background-color: #ddd;
+}
+
+td > button {
+    border-radius: 10%;
+}
+
+.align-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-merge {
+    text-align: center;
+}
+
+.bg-btn{
+    background: #84fad5;
+}

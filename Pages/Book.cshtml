@@ -1,0 +1,70 @@
+@page "{id:int?}"
+@model Admin_Web.Pages.BookModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div style="margin:auto" class="border border-secondary bg-light p-5 w-50">
+    @switch (Model.Job)
+    {
+        case BookModel.Action.Detail:
+            template(readOnly: true, errorMessage: "Khong tim thay cuon sach ban yeu cau");
+            <a class="btn" style="background: green;float: right; margin: 5px;" href="/">Return</a>
+            break;
+        case BookModel.Action.Delete:
+            template(readOnly: true, errorMessage: "Khong tim thay cuon sach ma ban yeu cau!");
+            <a class="btn btn-danger mt-1" asp-page="Book" asp-route-id="@Model.Book.Id" asp-page-handler="confirm">Delete</a>
+            <a class="btn" style="background: green;float: right; margin: 5px;" href="/">Return</a>
+            break;
+        case BookModel.Action.Create:
+            await form();
+            break;
+        default:
+            break;
+    }
+
+
+</div>
+
+@{
+    void template(bool readOnly = true, string errorMessage = "", string handler = "")
+    {
+        if (Model.Book == null && !handler.Equals("create"))
+        {
+            <p>@errorMessage</p>
+            return;
+        }
+        <input name="id" type="hidden" value="@Model.Book.Id" />
+        <p class="text-center">@Model.Book.Title</p>
+        <label for="title" type="text">Tieu de</label>
+        <input name="title" class="form-control" type="text" value="@Model.Book.Title" @(readOnly ?"readOnly" : "") />
+        <label for="authors" type="text">Tac gia</label>
+        <input name="authors" class="form-control" type="text" value="@Model.Book.Authors" @(readOnly ?"readOnly" : "") />
+        <label for="publisher" type="text">Nha xuat ban</label>
+        <input name="publisher" class="form-control" type="text" value="@Model.Book.Publisher" @(readOnly ?"readOnly" : "") />
+        <label for="year" type="text">Nam xuat ban</label>
+        <input name="year" class="form-control" type="text" value="@Model.Book.Year" @(readOnly ?"readOnly" : "") />
+    }
+
+}
+
+@{
+    async Task form(string handler = "create")
+    {
+        <form method="POST" href="?handler=@handler">
+            <input name="id" type="hidden" value="" />
+            <p class="text-center">Nhap sach moi</p>
+            <label for="title" type="text">Tieu de</label>
+            <input name="title" class="form-control" type="text" value="" />
+            <label for="authors" type="text">Tac gia</label>
+            <input name="authors" class="form-control" type="text" value="" />
+            <label for="publisher" type="text">Nha xuat ban</label>
+            <input name="publisher" class="form-control" type="text" value="" />
+            <label for="year" type="text">Nam xuat ban</label>
+            <input name="year" class="form-control" type="text" value=""/>
+            <button type="submit" class="btn btn-primary form-control mt-3">Save</button>
+            <button type="reset" class="btn btn-secondary form-control mt-3">Reset</button>
+
+        </form>
+        <a href="/" class="btn btn-primary form-control mt-3">Return</a>
+    }
+}
